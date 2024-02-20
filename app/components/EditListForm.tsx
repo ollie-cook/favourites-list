@@ -1,14 +1,14 @@
-import { type List } from "@/app/utils/types";
+import { type ListType } from "@/app/utils/types";
 
 interface EditListFormProps {
-  list: List;
-  setList: (list: List) => void;
+  list: ListType;
+  updateList: (list: ListType) => void;
   setMode: (mode: string) => void;
 }
 
 export default function EditListForm({
   list,
-  setList,
+  updateList,
   setMode
 } : EditListFormProps) {
 
@@ -24,14 +24,12 @@ export default function EditListForm({
 
     const newList = {
       id: list.id,
+      order: list.order,
       title: newTitle,
       items: newItems
     }
 
-    setList(newList)
-    setMode('read')
-
-    //set cookies
+    updateList(newList)
   }
 
   return (
@@ -60,9 +58,17 @@ export default function EditListForm({
         <label htmlFor="item5" className="text-white">5.</label>
         <input type="text" id="item5" name="item5" defaultValue={list.items[4]} className="w-full pl-2 py-1 rounded-lg bg-blue-950 text-white" />
       </div>
-      <button className="bg-green-600 rounded-lg p-2 self-end hover:bg-green-700">
-        Save
-      </button>
+      <div className="flex gap-2 self-end">
+        <button 
+          type="button" 
+          onClick={() => setMode('read')}
+          className="bg-red-600 rounded-lg p-2 self-end hover:bg-red-700">
+          Cancel
+        </button>
+        <button type="submit" className="bg-green-600 rounded-lg p-2 hover:bg-green-700">
+          Save
+        </button>
+      </div>
     </form>
   )
 }

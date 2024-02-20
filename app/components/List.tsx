@@ -1,13 +1,25 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { FaEdit } from "react-icons/fa";
 import EditListForm from './EditListForm';
-import { type List } from '@/app/utils/types';
+import { type ListType } from '@/app/utils/types';
+import Cookies from 'js-cookie'
 
-export default function List( { list } : { list: List }) {
+export default function List( { 
+  list
+} : { 
+  list: ListType 
+}) {
   const [listState, setListState] = useState(list)
   const [mode, setMode] = useState('read');
+
+  const handleUpdate = (list: ListType) => {
+    setListState(list)
+    setMode('read')
+
+    Cookies.set(list.id, JSON.stringify(list), { expires: 365 })
+  }
 
   return (
     <div className="group relative rounded-lg p-4 bg-gradient-to-br from-blue-950 to-[#0a1539]">
@@ -32,9 +44,8 @@ export default function List( { list } : { list: List }) {
         </ol>
         </>
         :
-        <EditListForm list={listState} setList={setListState} setMode={setMode} />
+        <EditListForm list={listState} updateList={handleUpdate} setMode={setMode} />
       }
-      
     </div>
   )
 }
