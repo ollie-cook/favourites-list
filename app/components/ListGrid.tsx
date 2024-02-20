@@ -41,7 +41,7 @@ export default function ListGrid() {
   lists.sort((a, b) => a.order - b.order)
 
   return (
-    <div className="grid grid-cols-2 gap-4 p-4 w-2/3">
+    <div className="grid grid-col-1 pb-4 gap-4 mt-8 mb-12 w-11/12 sm:w-5/6 md:w-2/3 lg:grid-cols-2 lg:w-5/6 xl:w-2/3">
       {
         lists.map((list) => {
           return <List key={list.id} list={list} />
