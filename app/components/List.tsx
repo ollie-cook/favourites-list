@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FaEdit } from "react-icons/fa";
 import EditListForm from './EditListForm';
+import { type List } from '@/app/utils/types';
 
-export default function List( { title, favourites } : { title: string, favourites: string[] }) {
-  const [titleState, setTitleState] = useState(title);
-  const [items, setItems] = useState(favourites);
+export default function List( { list } : { list: List }) {
+  const [listState, setListState] = useState(list)
   const [mode, setMode] = useState('read');
 
   return (
@@ -15,7 +15,7 @@ export default function List( { title, favourites } : { title: string, favourite
         mode == 'read' ?
         <>
         <h1 className="font-bold text-3xl text-white text-center">
-          {titleState}
+          {listState.title}
         </h1>
         <button 
           onClick={() => setMode('edit')}
@@ -24,15 +24,15 @@ export default function List( { title, favourites } : { title: string, favourite
           <FaEdit className="h-6 w-6" style={{color: 'white'}} />
         </button>
         <ol className="list-decimal list-inside mt-3 text-xl text-white">
-          <li className="mb-2">{items[0]}</li>
-          <li className="mb-2">{items[1]}</li>
-          <li className="mb-2">{items[2]}</li>
-          <li className="mb-2">{items[3]}</li>
-          <li className="">{items[4]}</li>
+          <li className="mb-2">{listState.items[0]}</li>
+          <li className="mb-2">{listState.items[1]}</li>
+          <li className="mb-2">{listState.items[2]}</li>
+          <li className="mb-2">{listState.items[3]}</li>
+          <li className="">{listState.items[4]}</li>
         </ol>
         </>
         :
-        <EditListForm title={titleState} items={items} setTitle={setTitleState} setItems={setItems} setMode={setMode} />
+        <EditListForm list={listState} setList={setListState} setMode={setMode} />
       }
       
     </div>
